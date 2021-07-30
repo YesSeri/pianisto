@@ -1,6 +1,5 @@
 <script>
 	import touchable from "./touchable.js";
-	import keyboard from "./keyboard.js";
 	import createSampler from "./sampler.js";
 	import Overlay from "./Overlay.svelte";
 	import Window from "./Window.svelte";
@@ -8,6 +7,7 @@
 	$: width = keys.length * 100 + 2;
 	let clicked = null;
 	let touches = [];
+	let pressed = [];
 
 	let sampler;
 	function loadSampler() {
@@ -37,6 +37,7 @@
 	}
 	function stopKeyMove(e) {
 		if (!leftMouseIsPressed(e)) return;
+		clicked = null;
 		stopSound(e.target.id);
 	}
 	function stopKeyUp(e) {
@@ -81,9 +82,20 @@
 		const note = idToNote(id);
 		sampler.triggerRelease(note);
 	}
+	function keyDown({ detail: { note } }) {
+		playSound(note);
+		pressed = [...pressed, note];
+	}
+	function keyUp({ detail: { note } }) {
+		stopSound(note);
+		pressed = pressed.filter((el) => el !== note);
+	}
+	function addSharp(note) {
+		return note[0] + "#" + note[1];
+	}
 </script>
 
-<Window />
+<Window {keys} on:keydown={keyDown} on:keyup={keyUp} />
 <div id="container">
 	<svg
 		viewbox="-1 -1 {width} 302"
@@ -92,13 +104,13 @@
 		on:touched={handleTouch}
 		on:moved={handleMoved}
 		on:released={handleRelease}
-		use:keyboard
 	>
 		<g id="white-keys">
 			{#each keys as key, i}
 				<path
 					class:activeWhite={clicked === key.note ||
-						touches.includes(key.note)}
+						touches.includes(key.note) ||
+						pressed.includes(key.note)}
 					on:mousedown={playKey}
 					on:mousemove={playKey}
 					on:mouseleave={stopKeyMove}
@@ -114,16 +126,16 @@
 		</g>
 		<g id="black-keys">
 			{#each keys as key, i}
-				{#if key.hasNeighbour && i !== keys.length - 1}
+				{#if key.hasNeighbour}
 					<path
-						class:activeBlack={clicked ===
-							key.note[0] + "#" + key.note[1] ||
-							touches.includes(key.note[0] + "#" + key.note[1])}
+						class:activeBlack={clicked === addSharp(key.note) ||
+							touches.includes(addSharp(key.note)) ||
+							pressed.includes(addSharp(key.note))}
 						on:mousedown={playKey}
 						on:mousemove={playKey}
 						on:mouseleave={stopKeyMove}
 						on:mouseup={stopKeyUp}
-						id={key.note[0] + "#" + key.note[1]}
+						id={addSharp(key.note)}
 						d="M{100 * i +
 							65} 0 v170 a 10 10 0 0 0 10 10 h50 a 10 10 0 0 0 10 -10 V0 Z"
 					/>
@@ -137,6 +149,9 @@
 <style>
 	#container {
 		position: relative;
+		max-width: 1600px;
+		margin: auto;
+		padding-top: 5px;
 	}
 	#overlay {
 		position: absolute;

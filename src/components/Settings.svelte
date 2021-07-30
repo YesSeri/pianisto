@@ -1,4 +1,6 @@
 <script>
+	import { createEventDispatcher } from "svelte";
+	const dispatch = createEventDispatcher();
 	let notes = [
 		"G3",
 		"A3",
@@ -15,6 +17,8 @@
 		"E5",
 		"F5",
 		"G5",
+		"A5",
+		"B5",
 		"C6",
 		"D6",
 		"E6",
@@ -22,8 +26,16 @@
 		"G6",
 		"A6",
 	];
-	let lowestNote = "C4";
-	let highestNote = "C5";
+	let lowestNote = localStorage.getItem("lowestNote");
+	let highestNote = localStorage.getItem("highestNote");
+	$: {
+		if (!(notes.includes(lowestNote) && notes.includes(highestNote))) {
+			lowestNote = "C4";
+			highestNote = "C5";
+		}
+		localStorage.setItem("lowestNote", lowestNote);
+		localStorage.setItem("highestNote", highestNote);
+	}
 	export let displayedNotes = notes.slice(
 		notes.indexOf(lowestNote),
 		notes.indexOf(highestNote) + 1

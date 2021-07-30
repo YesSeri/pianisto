@@ -8,13 +8,27 @@ html, body {
 body {
 	color: #333;
 	margin: 0;
-	padding: 8px;
+	padding: 0px;
 	box-sizing: border-box;
 	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 }
 
+.responsive {
+	margin: auto;
+	width: 70%;
+	@media screen and (max-width: 1200px) {
+		width: 80%;
+	}
+	@media screen and (max-width: 900px) {
+		width: 90%;
+	}
+	@media screen and (max-width: 600px) {
+		width: 100%;
+	}
+}
+
 a {
-	color: rgb(0,100,200);
+	color: rgb(0, 100, 200);
 	text-decoration: none;
 }
 
@@ -23,7 +37,7 @@ a:hover {
 }
 
 a:visited {
-	color: rgb(0,80,160);
+	color: rgb(0, 80, 160);
 }
 
 label {
@@ -49,6 +63,17 @@ button {
 	color: #333;
 	background-color: #f4f4f4;
 	outline: none;
+	background-color: #333;
+	color: white;
+	padding: 6px 8px;
+	text-align: center;
+	text-decoration: none;
+	font-size: 16px;
+	border: solid 3px #111;
+	border-radius: 5px;
+	user-select: none;
+	cursor: pointer;
+	min-width: 160px;
 }
 
 button:disabled {
@@ -56,7 +81,7 @@ button:disabled {
 }
 
 button:not(:disabled):active {
-	background-color: #ddd;
+	background-color: #555;
 }
 
 button:focus {
