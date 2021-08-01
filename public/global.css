@@ -16,13 +16,22 @@ body {
 .responsive {
 	margin: auto;
 	width: 70%;
-	@media screen and (max-width: 1200px) {
+}
+
+@media screen and (max-width: 1200px) {
+	.responsive {
 		width: 80%;
 	}
-	@media screen and (max-width: 900px) {
+}
+
+@media screen and (max-width: 900px) {
+	.responsive {
 		width: 90%;
 	}
-	@media screen and (max-width: 600px) {
+}
+
+@media screen and (max-width: 600px) {
+	.responsive {
 		width: 100%;
 	}
 }

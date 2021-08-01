@@ -4,6 +4,7 @@
 	import Overlay from "./Overlay.svelte";
 	import Window from "./Window.svelte";
 	export let keys;
+	export let fullscreen;
 	$: width = keys.length * 100 + 2;
 	let clicked = null;
 	let touches = [];
@@ -96,8 +97,9 @@
 </script>
 
 <Window {keys} on:keydown={keyDown} on:keyup={keyUp} />
-<div id="container">
+<div id="container" class:fullscreen>
 	<svg
+		class:fullscreen
 		viewbox="-1 -1 {width} 302"
 		preserveAspectRatio="none"
 		use:touchable
@@ -153,14 +155,7 @@
 		margin: auto;
 		padding-top: 5px;
 	}
-	#overlay {
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		z-index: 1;
-	}
+
 	#white-keys {
 		fill: white;
 		stroke: black;
@@ -174,5 +169,17 @@
 	}
 	.activeBlack {
 		fill: #444;
+	}
+	svg.fullscreen {
+		height: 100%;
+		width: 100%;
+	}
+	#container.fullscreen {
+		position: absolute;
+		top: -10px;
+		background-color: green;
+		width: 100%;
+		height: calc(100% + 10px);
+		max-width: none;
 	}
 </style>

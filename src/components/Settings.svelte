@@ -48,27 +48,60 @@
 	export let showSettings;
 </script>
 
-<div class:hide={!showSettings}>
-	<label for="lowestNote">Select lowest note:</label>
-	<select bind:value={lowestNote} name="lowestNote" id="lowestNote">
-		{#each notes.slice(0, notes.indexOf(highestNote)) as note, key}
-			<option selected={note === lowestNote} {key} value={note}
-				>{note}
-			</option>
-		{/each}
-	</select>
-	<label for="highestNote">Select highest note:</label>
-	<select bind:value={highestNote} name="highestNote" id="highestNote">
-		{#each notes.slice(notes.indexOf(lowestNote) + 1) as note, key}
-			<option selected={note === highestNote} {key} value={note}
-				>{note}
-			</option>
-		{/each}
-	</select>
+<div class:hide={showSettings} id="container">
+	<div class="setting">
+		<label for="lowestNote">Select lowest note:</label>
+		<select bind:value={lowestNote} name="lowestNote" id="lowestNote">
+			{#each notes.slice(0, notes.indexOf(highestNote)) as note, key}
+				<option selected={note === lowestNote} {key} value={note}
+					>{note}
+				</option>
+			{/each}
+		</select>
+	</div>
+	<div class="setting">
+		<label for="highestNote">Select highest note:</label>
+		<select bind:value={highestNote} name="highestNote" id="highestNote">
+			{#each notes.slice(notes.indexOf(lowestNote) + 1) as note, key}
+				<option selected={note === highestNote} {key} value={note}
+					>{note}
+				</option>
+			{/each}
+		</select>
+	</div>
 </div>
 
 <style>
-	.hide {
+	#container {
+		border-radius: 25px;
+		margin-top: 5px;
+		background-color: #ccc;
+		display: inline-block;
+		padding: 10px;
+	}
+	.setting {
+		display: grid;
+		justify-content: center;
+		grid-template-columns: 2fr 1fr;
+		align-items: center;
+	}
+	@media screen and (max-width: 600px) {
+		.setting {
+			display: block;
+		}
+	}
+	select {
+		margin: 4px;
+	}
+	label {
+		margin-right: 5px;
+	}
+	@media screen and (max-width: 600px) {
+		label {
+			margin-right: 0;
+		}
+	}
+	#container.hide {
 		display: none;
 	}
 </style>

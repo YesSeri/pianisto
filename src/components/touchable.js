@@ -3,6 +3,8 @@ export default function touchable(node) {
 
 	function handleTouchDown(event) {
 		touches = [...event.touches].map(el => el.target.id)
+		// Using event.preventDefault disables scrolling.
+		event.preventDefault();
 		node.dispatchEvent(new CustomEvent('touched', {
 			detail: { touches }
 		}));

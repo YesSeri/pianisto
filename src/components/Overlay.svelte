@@ -14,7 +14,7 @@
 
 {#if visible}
 	<div on:click={handleClick} id="overlay" out:fade>
-		<div id="word">
+		<div id="text">
 			{text}
 		</div>
 	</div>
@@ -30,11 +30,18 @@
 		z-index: 1;
 		background-color: #fffc;
 	}
-	#word {
+
+	#text {
 		font-size: 64px;
 		height: 100%;
 		display: flex;
 		align-items: center;
 		justify-content: center;
+	}
+
+	@media screen and (max-width: 600px) {
+		#text {
+			font-size: 32px;
+		}
 	}
 </style>
