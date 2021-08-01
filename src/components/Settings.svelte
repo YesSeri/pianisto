@@ -1,6 +1,4 @@
 <script>
-	import { createEventDispatcher } from "svelte";
-	const dispatch = createEventDispatcher();
 	let notes = [
 		"G3",
 		"A3",
@@ -48,7 +46,7 @@
 	export let showSettings;
 </script>
 
-<div class:hide={showSettings} id="container">
+<div class:hide={!showSettings} id="container">
 	<div class="setting">
 		<label for="lowestNote">Select lowest note:</label>
 		<select bind:value={lowestNote} name="lowestNote" id="lowestNote">
@@ -74,10 +72,11 @@
 <style>
 	#container {
 		border-radius: 25px;
-		margin-top: 5px;
+		margin: 10px 0 5px 0;
 		background-color: #ccc;
 		display: inline-block;
 		padding: 10px;
+		box-shadow: 0 0 8px 0 #000;
 	}
 	.setting {
 		display: grid;

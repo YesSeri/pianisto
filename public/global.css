@@ -69,8 +69,6 @@ input:disabled {
 }
 
 button {
-	color: #333;
-	background-color: #f4f4f4;
 	outline: none;
 	background-color: #333;
 	color: white;
@@ -95,4 +93,9 @@ button:not(:disabled):active {
 
 button:focus {
 	border-color: #666;
+}
+
+button:hover {
+	background-color: #555;
+	border: solid 3px #444;
 }
