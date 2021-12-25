@@ -151,9 +151,13 @@
 <style>
 	#container {
 		position: relative;
-		max-width: 1600px;
 		margin: auto;
 		padding-top: 5px;
+	}
+	@media screen and (min-width: 1000px) {
+		#container {
+			max-width: 80vw;
+		}
 	}
 
 	#white-keys {
