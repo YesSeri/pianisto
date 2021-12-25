@@ -21,7 +21,7 @@
 	</div>
 {/if}
 
-{#if showSoundMessage}
+{#if showSoundMessage && !visible}
 	<div id="overlay" on:click={handleSoundClick} out:fade>
 		<div id="text">LOADING AUDIO</div>
 	</div>
