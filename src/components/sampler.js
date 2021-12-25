@@ -31,6 +31,7 @@ export default function sampler() {
 			"C4": c6,
 			"D#4": ds6,
 			"F#4": fs6,
+			"A4": a6,
 
 		},
 		release: 2,

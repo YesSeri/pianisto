@@ -5,10 +5,14 @@
 	export let text = "";
 	const dispatch = createEventDispatcher();
 	let visible = true;
-
+	export let showSoundMessage = false;
+	console.log(showSoundMessage);
 	function handleClick() {
 		visible = false;
 		dispatch("loadSampler");
+	}
+	function handleSoundClick() {
+		visible = false;
 	}
 </script>
 
@@ -17,6 +21,12 @@
 		<div id="text">
 			{text}
 		</div>
+	</div>
+{/if}
+
+{#if showSoundMessage}
+	<div id="overlay" on:click={handleSoundClick} out:fade>
+		<div id="text">Loading audio.</div>
 	</div>
 {/if}
 

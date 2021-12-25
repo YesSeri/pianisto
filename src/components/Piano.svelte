@@ -8,6 +8,8 @@
 	export let fullscreen;
 	export let showKeybindings;
 	export let showNotes;
+	$: showSoundMessage = false;
+
 	$: width = keys.length * 100 + 2;
 	let clicked = null;
 	let touches = [];
@@ -79,7 +81,15 @@
 	function playSound(id) {
 		if (!sampler) return;
 		const note = idToNote(id);
-		sampler.triggerAttack(note);
+		try {
+			sampler.triggerAttack(note);
+		} catch (error) {
+			console.error(error);
+			showSoundMessage = true;
+			setTimeout(() => {
+				showSoundMessage = false;
+			}, 2000);
+		}
 	}
 	function stopSound(id) {
 		if (!sampler) return;
@@ -196,10 +206,17 @@
 			{/each}
 		</g>
 	</svg>
-	<Overlay on:loadSampler={loadSampler} text="CLICK TO LOAD" />
+	<Overlay
+		bind:showSoundMessage
+		on:loadSampler={loadSampler}
+		text="CLICK TO LOAD"
+	/>
 </div>
 
 <style>
+	#loading-sound-info {
+		padding-bottom: 5px;
+	}
 	#container {
 		position: relative;
 		margin: auto;
