@@ -88,7 +88,7 @@
 			showSoundMessage = true;
 			setTimeout(() => {
 				showSoundMessage = false;
-			}, 2000);
+			}, 2500);
 		}
 	}
 	function stopSound(id) {
@@ -206,11 +206,7 @@
 			{/each}
 		</g>
 	</svg>
-	<Overlay
-		bind:showSoundMessage
-		on:loadSampler={loadSampler}
-		text="CLICK TO LOAD"
-	/>
+	<Overlay bind:showSoundMessage on:loadSampler={loadSampler} />
 </div>
 
 <style>

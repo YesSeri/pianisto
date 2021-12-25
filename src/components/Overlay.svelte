@@ -2,7 +2,6 @@
 	import { fade } from "svelte/transition";
 	import { createEventDispatcher } from "svelte";
 
-	export let text = "";
 	const dispatch = createEventDispatcher();
 	let visible = true;
 	export let showSoundMessage = false;
@@ -18,15 +17,13 @@
 
 {#if visible}
 	<div on:click={handleClick} id="overlay" out:fade>
-		<div id="text">
-			{text}
-		</div>
+		<div id="text">CLICK TO LOAD</div>
 	</div>
 {/if}
 
 {#if showSoundMessage}
 	<div id="overlay" on:click={handleSoundClick} out:fade>
-		<div id="text">Loading audio.</div>
+		<div id="text">LOADING AUDIO</div>
 	</div>
 {/if}
 
