@@ -165,6 +165,33 @@
 						d="M{100 * i +
 							65} 0 v170 a 10 10 0 0 0 10 10 h50 a 10 10 0 0 0 10 -10 V0 Z"
 					/>
+					{#if showKeybindings}
+						<text
+							x={i * 100 + 90}
+							font-family="monospace"
+							font-size="30"
+							y="165"
+							fill="white"
+							stroke="white"
+						>
+							{translation.find(
+								(el) => el.note === addSharp(key.note)
+							).key}
+						</text>
+					{/if}
+
+					{#if showNotes}
+						<text
+							x={i * 100 + 82}
+							font-family="monospace"
+							font-size="30"
+							y="125"
+							fill="white"
+							stroke="white"
+						>
+							{addSharp(key.note).slice(0, 2)}</text
+						>
+					{/if}
 				{/if}
 			{/each}
 		</g>
