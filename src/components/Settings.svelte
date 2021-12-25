@@ -49,7 +49,7 @@
 </script>
 
 <!-- <div class:hide={!showSettings} id="container"> -->
-<div class:hide={showSettings} id="container">
+<div class:hide={!showSettings} id="container">
 	<div class="setting">
 		<label for="lowestNote">Select lowest note:</label>
 		<select bind:value={lowestNote} name="lowestNote" id="lowestNote">

@@ -132,7 +132,7 @@
 						x={i * 100 + 38}
 						font-family="monospace"
 						font-size="30"
-						y="265"
+						y="275"
 						fill="black"
 					>
 						{translation.find((el) => el.note === key.note).key}
@@ -144,7 +144,7 @@
 						x={i * 100 + 38}
 						font-family="monospace"
 						font-size="30"
-						y="225"
+						y="235"
 						fill="black">{key.note.slice(0, 1)}</text
 					>
 				{/if}
