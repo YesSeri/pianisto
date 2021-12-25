@@ -34,6 +34,8 @@
 		localStorage.setItem("lowestNote", lowestNote);
 		localStorage.setItem("highestNote", highestNote);
 	}
+	export let showKeybindings = false;
+	export let showNotes = false;
 	export let displayedNotes = notes.slice(
 		notes.indexOf(lowestNote),
 		notes.indexOf(highestNote) + 1
@@ -46,7 +48,8 @@
 	export let showSettings;
 </script>
 
-<div class:hide={!showSettings} id="container">
+<!-- <div class:hide={!showSettings} id="container"> -->
+<div class:hide={showSettings} id="container">
 	<div class="setting">
 		<label for="lowestNote">Select lowest note:</label>
 		<select bind:value={lowestNote} name="lowestNote" id="lowestNote">
@@ -67,6 +70,28 @@
 			{/each}
 		</select>
 	</div>
+	<div class="setting">
+		<label for="showNotes">Show Note Values:</label>
+		<div>
+			<input
+				bind:checked={showNotes}
+				type="checkbox"
+				id="showNotes"
+				name="showNotes"
+			/>
+		</div>
+	</div>
+	<div class="setting">
+		<label for="showKeybindings">Show Keybindings:</label>
+		<div>
+			<input
+				bind:checked={showKeybindings}
+				type="checkbox"
+				id="showKeybindings"
+				name="showKeybindings"
+			/>
+		</div>
+	</div>
 </div>
 
 <style>
@@ -80,24 +105,29 @@
 	}
 	.setting {
 		display: grid;
-		justify-content: center;
 		grid-template-columns: 2fr 1fr;
 		align-items: center;
-	}
-	@media screen and (max-width: 600px) {
-		.setting {
-			display: block;
-		}
-	}
-	select {
 		margin: 4px;
+		padding: 4px;
 	}
+	select,
+	input {
+		padding: 0;
+		margin: 0;
+	}
+
 	label {
 		margin-right: 5px;
 	}
 	@media screen and (max-width: 600px) {
 		label {
 			margin-right: 0;
+		}
+		.setting {
+			display: block;
+		}
+		select {
+			min-width: 80px;
 		}
 	}
 	#container.hide {

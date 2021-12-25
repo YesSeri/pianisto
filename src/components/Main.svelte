@@ -6,6 +6,8 @@
 	let showSettings = false;
 	let fullscreen = false;
 	let displayedNotes = [];
+	let showKeybindings = false;
+	let showNotes = false;
 	let keys = [];
 	const hasNeighbours = ["A", "C", "D", "F", "G"];
 	$: keys = displayedNotes.map((note, i) => {
@@ -21,8 +23,13 @@
 
 <div>
 	<Top />
-	<Settings bind:displayedNotes {showSettings} />
-	<Piano {keys} {fullscreen} />
+	<Settings
+		bind:displayedNotes
+		bind:showKeybindings
+		bind:showNotes
+		{showSettings}
+	/>
+	<Piano {keys} {fullscreen} {showKeybindings} {showNotes} />
 	<button on:click={() => (showSettings = !showSettings)}> Settings </button>
 	<FullscreenButton bind:fullscreen />
 </div>

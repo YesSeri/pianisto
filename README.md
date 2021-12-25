@@ -1,8 +1,10 @@
-*Looking for a shareable component template? Go here --> [sveltejs/component-template](https://github.com/sveltejs/component-template)*
+# Pianisto
 
----
+This is a piano app. Used to play piano online. You can play by either using the keyboard, touch or mouse.
 
-# svelte app
+To implement: 
+- Overlaying Keybindings
+- Overlaying Note name
 
 This is a project template for [Svelte](https://svelte.dev) apps. It lives at https://github.com/sveltejs/template.
 

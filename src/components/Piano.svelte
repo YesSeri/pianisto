@@ -3,8 +3,11 @@
 	import createSampler from "./sampler.js";
 	import Overlay from "./Overlay.svelte";
 	import Window from "./Window.svelte";
+	import { translation } from "./keybindings";
 	export let keys;
 	export let fullscreen;
+	export let showKeybindings;
+	export let showNotes;
 	$: width = keys.length * 100 + 2;
 	let clicked = null;
 	let touches = [];
@@ -96,7 +99,7 @@
 	}
 </script>
 
-<Window {keys} on:keydown={keyDown} on:keyup={keyUp} />
+<Window {keys} {translation} on:keydown={keyDown} on:keyup={keyUp} />
 <div id="container" class:fullscreen>
 	<svg
 		class:fullscreen
@@ -124,6 +127,27 @@
 						? `M${i * 100} 0 v300 h90 a 10 10 0 0 0 10 -10 v-290 Z`
 						: `M${i * 100} 0 v300 h100 v-300 Z`}
 				/>
+				{#if showKeybindings}
+					<text
+						x={i * 100 + 38}
+						font-family="monospace"
+						font-size="30"
+						y="265"
+						fill="black"
+					>
+						{translation.find((el) => el.note === key.note).key}
+					</text>
+				{/if}
+
+				{#if showNotes}
+					<text
+						x={i * 100 + 38}
+						font-family="monospace"
+						font-size="30"
+						y="225"
+						fill="black">{key.note.slice(0, 1)}</text
+					>
+				{/if}
 			{/each}
 		</g>
 		<g id="black-keys">
