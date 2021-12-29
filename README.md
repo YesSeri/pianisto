@@ -6,7 +6,13 @@ Works with touch, mouse or keyboard.
 
 ## Deployment
 
-To test this project run `git clone https://github.com/YesSeri/svelte-piano/` and then `npm install` and lastly `npm run dev`. Go to `localhost:{PORT}/` at whatever {PORT} is being reported in the console.
+To test this project run 
+```bash
+git clone https://github.com/YesSeri/svelte-piano/
+npm install
+npm run dev
+```
+Go to `localhost:{PORT}/` at whatever {PORT} is being reported in the console.
 
 ## Roadmap
 
