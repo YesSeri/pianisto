@@ -4,6 +4,9 @@ This is an online piano for playing piano in the browser.
 Works with touch, mouse or keyboard.
 [Page](https://pianisto.net/)
 
+## Caveats
+The page works in Chrome, Firefox and Edge. Safari is not yet supported.
+
 ## Deployment
 
 To test this project run 
