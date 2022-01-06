@@ -1,5 +1,5 @@
 <script>
-	import svgData from "./piano.js";
+	import svgData from "./pianoSvg.js";
 </script>
 
 <div>

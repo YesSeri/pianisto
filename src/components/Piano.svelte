@@ -8,14 +8,18 @@
 	export let fullscreen;
 	export let showKeybindings;
 	export let showNotes;
+	// If sound resources have not loaded yet we use this in triggering a message that is has not loaded.
 	$: showSoundMessage = false;
 
 	$: width = keys.length * 100 + 2;
+
 	let clicked = null;
 	let touches = [];
 	let pressed = [];
 
 	let sampler;
+	// We should load the sampler (the thing that makes sounds) first after the user have interacted with website.
+	// Some browsers disable sound before that.
 	function loadSampler() {
 		sampler = createSampler();
 	}
@@ -25,6 +29,8 @@
 		clicked = e.target.id;
 		playSound(clicked);
 	}
+
+	// We want to trigger on left mouse button, regardless if other buttons are pressed.
 	function leftMouseIsPressed(e) {
 		let buttons = e.buttons;
 		if (buttons >= 16) {
@@ -137,7 +143,9 @@
 						? `M${i * 100} 0 v300 h90 a 10 10 0 0 0 10 -10 v-290 Z`
 						: `M${i * 100} 0 v300 h100 v-300 Z`}
 				/>
+
 				{#if showKeybindings}
+					<!-- Used to display keybinding  -->
 					<text
 						x={i * 100 + 38}
 						font-family="monospace"
@@ -150,6 +158,7 @@
 				{/if}
 
 				{#if showNotes}
+					<!-- Used to display note name  -->
 					<text
 						x={i * 100 + 38}
 						font-family="monospace"
@@ -176,6 +185,7 @@
 							65} 0 v170 a 10 10 0 0 0 10 10 h50 a 10 10 0 0 0 10 -10 V0 Z"
 					/>
 					{#if showKeybindings}
+						<!-- Used to display keybinding name  -->
 						<text
 							x={i * 100 + 90}
 							font-family="monospace"
@@ -191,6 +201,7 @@
 					{/if}
 
 					{#if showNotes}
+						<!-- Used to display note name  -->
 						<text
 							x={i * 100 + 82}
 							font-family="monospace"
@@ -250,4 +261,25 @@
 		height: calc(100% + 10px);
 		max-width: none;
 	}
+
+	/* @media only screen and (orientation: portrait) {
+		#container.fullscreen {
+			width: 100vh;
+			height: 100vw;
+			-webkit-transform: rotate(90deg);
+			-moz-transform: rotate(90deg);
+			-o-transform: rotate(90deg);
+			-ms-transform: rotate(90deg);
+			transform: rotate(90deg);
+		}
+	}
+	@media only screen and (orientation: landscape) {
+		#container.fullscreen {
+			-webkit-transform: rotate(0deg);
+			-moz-transform: rotate(0deg);
+			-o-transform: rotate(0deg);
+			-ms-transform: rotate(0deg);
+			transform: rotate(0deg);
+		}
+	} */
 </style>

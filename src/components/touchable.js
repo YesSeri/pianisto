@@ -1,10 +1,12 @@
+// This handles all the touch events. Is used inside the svg of the piano.
 export default function touchable(node) {
 	let touches;
 
 	function handleTouchDown(event) {
 		touches = [...event.touches].map(el => el.target.id)
-		// Using event.preventDefault disables scrolling.
+		// Using event.preventDefault disables scrolling inside the piano.
 		event.preventDefault();
+		console.log({ touches })
 		node.dispatchEvent(new CustomEvent('touched', {
 			detail: { touches }
 		}));
@@ -19,9 +21,10 @@ export default function touchable(node) {
 		const currentTouches = [...event.touches].map(touch => document.elementFromPoint(touch.clientX, touch.clientY)).filter(touch => touch?.tagName === 'path').map(el => el.id)
 		let pressed = [];
 		let released = [];
-		for (const curTouch of currentTouches) {
-			if (!touches.includes(curTouch)) {
-				pressed.push(curTouch)
+
+		for (const currentTouch of currentTouches) {
+			if (!touches.includes(currentTouch)) {
+				pressed.push(currentTouch)
 			}
 		}
 		for (const touch of touches) {
@@ -29,6 +32,7 @@ export default function touchable(node) {
 				released.push(touch)
 			}
 		}
+
 		touches = currentTouches;
 		if (released.length || pressed.length) {
 			node.dispatchEvent(new CustomEvent('moved', {

@@ -1,11 +1,14 @@
 <script>
+	// Used to create a clickable overlay over the piano.
+	// When user interacts with this the sampler gets loaded.
+	// Also displays a message if user tries to click key,
+	// before the audio for the key has been loaded.
 	import { fade } from "svelte/transition";
 	import { createEventDispatcher } from "svelte";
 
 	const dispatch = createEventDispatcher();
 	let visible = true;
 	export let showSoundMessage = false;
-	console.log(showSoundMessage);
 	function handleClick() {
 		visible = false;
 		dispatch("loadSampler");
@@ -22,7 +25,7 @@
 {/if}
 
 {#if showSoundMessage && !visible}
-	<div id="overlay" on:click={handleSoundClick} out:fade>
+	<div on:click={handleSoundClick} id="overlay" out:fade>
 		<div id="text">LOADING AUDIO</div>
 	</div>
 {/if}
