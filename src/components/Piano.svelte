@@ -57,10 +57,10 @@
 		clicked = null;
 	}
 	function handleTouch(event) {
-		touches = event.detail.touches;
-		for (const touch of touches) {
-			playSound(touch);
-		}
+		const touch = event.detail.touch;
+		touches.push(touch);
+		touches = touches;
+		playSound(touch);
 	}
 	function handleMoved(event) {
 		touches = touches.filter(
@@ -74,11 +74,10 @@
 			stopSound(release);
 		}
 	}
-	function handleRelease() {
-		for (const touch of touches) {
-			stopSound(touch);
-		}
-		touches = [];
+	function handleRelease(event) {
+		const releasedNote = event.detail.released;
+		stopSound(releasedNote);
+		touches = touches.filter((el) => el !== releasedNote);
 	}
 	function idToNote(id) {
 		const newNum = id[id.length - 1] - 2;

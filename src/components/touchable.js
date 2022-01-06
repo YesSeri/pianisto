@@ -3,12 +3,12 @@ export default function touchable(node) {
 	let touches;
 
 	function handleTouchDown(event) {
-		touches = [...event.touches].map(el => el.target.id)
+		const touch = event.targetTouches['0'].target.id
+		touches = [...new Set([...event.touches, event.targetTouches['0']].map(el => el.target.id))]
 		// Using event.preventDefault disables scrolling inside the piano.
 		event.preventDefault();
-		console.log({ touches })
 		node.dispatchEvent(new CustomEvent('touched', {
-			detail: { touches }
+			detail: { touch }
 		}));
 
 		window.addEventListener('touchmove', handleTouchMove);
@@ -42,14 +42,17 @@ export default function touchable(node) {
 
 	}
 
-	function handleTouchRelease() {
+	function handleTouchRelease(e) {
+		const releasedTouch = e.changedTouches['0']
+		const path = document.elementFromPoint(releasedTouch.clientX, releasedTouch.clientY)
+		const releasedNote = path.id;
 		node.dispatchEvent(new CustomEvent('released', {
-			detail: { released: touches }
+			detail: { released: releasedNote }
 		}));
 
-		window.removeEventListener('touchmove', handleTouchMove);
-		window.removeEventListener('touchend', handleTouchRelease);
-		window.removeEventListener('touchcancel', handleTouchRelease);
+		// window.removeEventListener('touchmove', handleTouchMove);
+		// window.removeEventListener('touchend', handleTouchRelease);
+		// window.removeEventListener('touchcancel', handleTouchRelease);
 	}
 
 	node.addEventListener('touchstart', handleTouchDown);
