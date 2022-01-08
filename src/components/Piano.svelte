@@ -216,7 +216,7 @@
 			{/each}
 		</g>
 	</svg>
-	<Overlay bind:showSoundMessage on:loadSampler={loadSampler} />
+	<Overlay bind:showSoundMessage on:loadSampler={loadSampler} {fullscreen} />
 </div>
 
 <style>

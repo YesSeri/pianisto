@@ -9,6 +9,8 @@
 	const dispatch = createEventDispatcher();
 	let visible = true;
 	export let showSoundMessage = false;
+	export let fullscreen;
+	let showRotateMessage = true;
 	function handleClick() {
 		visible = false;
 		dispatch("loadSampler");
@@ -16,22 +18,32 @@
 	function handleSoundClick() {
 		visible = false;
 	}
+	function handleRotateMessageClick() {
+		showRotateMessage = false;
+	}
 </script>
 
 {#if visible}
-	<div on:click={handleClick} id="overlay" out:fade>
+	<div on:click={handleClick} class="overlay" out:fade>
 		<div id="text">CLICK TO LOAD</div>
 	</div>
 {/if}
 
 {#if showSoundMessage && !visible}
-	<div on:click={handleSoundClick} id="overlay" out:fade>
+	<div on:click={handleSoundClick} class="overlay" out:fade>
 		<div id="text">LOADING AUDIO</div>
 	</div>
 {/if}
 
+<!-- {#if fullscreen} -->
+{#if showRotateMessage && fullscreen}
+	<div class="overlay rotate-message" on:click={handleRotateMessageClick}>
+		Rotate phone
+	</div>
+{/if}
+
 <style>
-	#overlay {
+	.overlay {
 		position: absolute;
 		top: 0;
 		left: 0;
@@ -53,6 +65,21 @@
 	@media screen and (max-width: 600px) {
 		#text {
 			font-size: 32px;
+		}
+	}
+	@media (orientation: landscape) {
+		.rotate-message {
+			display: none;
+		}
+	}
+
+	@media (hover: none) and (orientation: portrait) {
+		.overlay.rotate-message {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			font-size: 10vw;
+			background-color: #fff;
 		}
 	}
 </style>
