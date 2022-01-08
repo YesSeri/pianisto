@@ -4,7 +4,7 @@
 	// Also displays a message if user tries to click key,
 	// before the audio for the key has been loaded.
 	import { fade } from "svelte/transition";
-	import { createEventDispatcher } from "svelte";
+	import { createEventDispatcher, onMount } from "svelte";
 
 	const dispatch = createEventDispatcher();
 	let visible = true;
@@ -25,20 +25,20 @@
 
 {#if visible}
 	<div on:click={handleClick} class="overlay" out:fade>
-		<div id="text">CLICK TO LOAD</div>
+		<div class="inner-load">CLICK TO LOAD</div>
 	</div>
 {/if}
 
 {#if showSoundMessage && !visible}
 	<div on:click={handleSoundClick} class="overlay" out:fade>
-		<div id="text">LOADING AUDIO</div>
+		LOADING AUDIO
 	</div>
 {/if}
 
 <!-- {#if fullscreen} -->
 {#if showRotateMessage && fullscreen}
 	<div class="overlay rotate-message" on:click={handleRotateMessageClick}>
-		Rotate phone
+		<div class="inner-rotate">ROTATE PHONE</div>
 	</div>
 {/if}
 
@@ -49,21 +49,17 @@
 		left: 0;
 		width: 100%;
 		height: 100%;
-		z-index: 1;
-		background-color: #fffc;
+		z-index: 2;
+		background-color: #fffd;
 		cursor: default;
-	}
-
-	#text {
-		font-size: 64px;
-		height: 100%;
 		display: flex;
-		align-items: center;
 		justify-content: center;
+		align-items: center;
+		font-size: 64px;
 	}
 
 	@media screen and (max-width: 600px) {
-		#text {
+		.overlay {
 			font-size: 32px;
 		}
 	}
@@ -73,13 +69,19 @@
 		}
 	}
 
-	@media (hover: none) and (orientation: portrait) {
+	@media (hover: none) and (orientation: portrait) and (display-mode: fullscreen) {
+		.overlay {
+			background-color: transparent;
+		}
+		.overlay > .inner-load {
+			margin-bottom: -130px;
+		}
+		.overlay > .inner-rotate {
+			margin-bottom: 130px;
+		}
 		.overlay.rotate-message {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			font-size: 10vw;
-			background-color: #fff;
+			background-color: #fffd;
+			z-index: 1;
 		}
 	}
 </style>
