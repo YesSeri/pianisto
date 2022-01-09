@@ -24,7 +24,7 @@ Go to `localhost:{PORT}/` at whatever {PORT} is being reported in the console.
 
 ## Tech Stack
 
-**Client:** [Svelte](https://svelte.dev/tutorial/basics), [Tone.js](https://tonejs.github.io/)
+[Svelte](https://svelte.dev/tutorial/basics), [Tone.js](https://tonejs.github.io/)
 
   
 ## Contributing
