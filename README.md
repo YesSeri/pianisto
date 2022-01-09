@@ -33,4 +33,4 @@ Contributions are always welcome!
   
 ## Authors
 
-- [@yesseri](https://www.github.com/yesseri)
+- [Henrik Zenkert](https://www.github.com/yesseri)
