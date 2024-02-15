@@ -225,7 +225,7 @@
 	}
 	#container {
 		position: relative;
-		margin: auto;
+		margin: 0 auto 2em auto;
 		padding-top: 5px;
 	}
 	@media screen and (min-width: 1000px) {
