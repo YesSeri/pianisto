@@ -221,38 +221,49 @@
   }
   #container {
     position: relative;
-    margin: 0 auto 2em auto;
-    padding-top: 5px;
+    margin: 5px auto 2em auto;
+  }
+
+  #container:has(svg > #white-keys > path:nth-child(6)) {
+    height: min(220px, 100%);
+  }
+
+  #container:has(svg > #white-keys > path:nth-child(8)) {
+    height: min(240px, 100%);
+  }
+
+  #container:has(svg > #white-keys > path:nth-child(10)) {
+    height: min(260px, 100%);
+  }
+  #container:has(svg > #white-keys > path:nth-child(12)) {
+    height: min(280px, 100%);
+  }
+
+  #container:has(svg > #white-keys > path:nth-child(14)) {
+    height: min(320px, 100%);
   }
   @media screen and (min-width: 1000px) {
     #container:has(svg > #white-keys > path:nth-child(4)) {
       max-width: 400px;
-      height: 220px;
     }
     #container:has(svg > #white-keys > path:nth-child(6)) {
       max-width: 600px;
-      height: 220px;
     }
 
     #container:has(svg > #white-keys > path:nth-child(8)) {
       max-width: 800px;
-      height: 240px;
     }
 
     #container:has(svg > #white-keys > path:nth-child(10)) {
       max-width: 1000px;
-      height: 260px;
     }
     #container:has(svg > #white-keys > path:nth-child(12)) {
       max-width: 1200px;
-      height: 280px;
     }
 
     #container:has(svg > #white-keys > path:nth-child(14)) {
       max-width: 1400px;
-      height: 320px;
     }
-
     #container:has(svg > #white-keys > path:nth-child(16)) {
       max-width: 100%;
     }
@@ -283,7 +294,7 @@
     top: -10px;
     background-color: green;
     width: 100%;
-    height: calc(100% + 10px);
+    height: calc(100% + 10px) !important;
     max-width: none !important;
   }
 
