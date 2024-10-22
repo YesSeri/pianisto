@@ -12,6 +12,7 @@ The page works in Chrome, Firefox and Edge. Safari is not yet supported.
 To test this project run 
 ```bash
 git clone https://github.com/YesSeri/svelte-piano/
+cd svelte-piano
 npm install
 npm run dev
 ```
