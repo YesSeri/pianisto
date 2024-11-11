@@ -1,6 +1,6 @@
 <script>
   import touchable from "./touchable.js";
-  import createSampler from "./sampler.js";
+  import { createSampler } from "./sampler.js";
   import Overlay from "./Overlay.svelte";
   import Window from "./Window.svelte";
   import { translation } from "./keybindings";
@@ -21,6 +21,7 @@
   // We should load the sampler (the thing that makes sounds) first after the user have interacted with website.
   // Some browsers disable sound before that.
   function loadSampler() {
+    console.log("ALSKDMASKLM");
     sampler = createSampler();
   }
 
@@ -82,6 +83,7 @@
     return id.slice(0, -1) + newNum;
   }
   function playSound(id) {
+    console.log({ id, sampler });
     if (!sampler) return;
     const note = idToNote(id);
     try {

@@ -15,7 +15,8 @@ const ds6 = new Tone.Buffer('./audio/30.ds6.ogg');
 const fs6 = new Tone.Buffer('./audio/31.fs6.ogg');
 const a6 = new Tone.Buffer('./audio/32.a6.ogg');
 
-export default function sampler() {
+export function createSampler() {
+	console.log({ Tone })
 	return new Tone.Sampler({
 		urls: {
 			"G1": g3,
