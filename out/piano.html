@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Vanilla Piano</title>
+	<style>
+		#container {
+			width: 100%;
+			max-width: 800px;
+			margin: auto;
+			position: relative;
+		}
+
+		svg {
+			width: 100%;
+			height: 300px;
+		}
+
+		.white-key {
+			fill: white;
+			stroke: black;
+		}
+
+		.black-key {
+			fill: black;
+			stroke: black;
+		}
+
+		.hide {
+			display: none;
+		}
+	</style>
+</head>
+
+<body>
+
+	<h1>
+		Pianisto
+
+	</h1>
+	<main id="container">
+		<svg id="piano" viewBox="-1 -1 701 302" preserveAspectRatio="none">
+			<g id="white-keys"></g>
+			<g id="black-keys"></g>
+		</svg>
+	</main>
+
+	<button id="toggle-settings">Toggle Settings</button>
+	<div id="settings-container" class="hide">
+		<div class="setting">
+			<label for="lowestNote">Select lowest note:</label>
+			<select id="lowestNote"></select>
+		</div>
+		<div class="setting">
+			<label for="highestNote">Select highest note:</label>
+			<select id="highestNote"></select>
+		</div>
+		<div class="setting">
+			<label for="showNotes">Show Note Values:</label>
+			<div><input type="checkbox" id="showNotes" /></div>
+		</div>
+		<div class="setting">
+			<label for="showKeybindings">Show Keybindings:</label>
+			<div><input type="checkbox" id="showKeybindings" /></div>
+		</div>
+	</div>
+
+	<script src="piano.js" type="module"></script>
+	<script src="settings.js" type="module"></script>
+	<script src="./tone.js"></script>
+
+</body>
+
+</html>

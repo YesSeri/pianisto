@@ -1,0 +1,14 @@
+export { default as g3 } from './1.g3.ogg';
+export { default as a3 } from './3.a3.ogg';
+export { default as c4 } from './6.c4.ogg';
+export { default as ds4 } from './9.ds4.ogg';
+export { default as fs4 } from './12.fs4.ogg';
+export { default as a4 } from './15.a4.ogg';
+export { default as c5 } from './18.c5.ogg';
+export { default as ds5 } from './21.ds5.ogg';
+export { default as fs5 } from './24.fs5.ogg';
+export { default as a5 } from './27.a5.ogg';
+export { default as c6 } from './29.c6.ogg';
+export { default as ds6 } from './30.ds6.ogg';
+export { default as fs6 } from './31.fs6.ogg';
+export { default as a6 } from './32.a6.ogg';
