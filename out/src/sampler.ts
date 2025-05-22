@@ -1,24 +1,8 @@
-// const buffers = {
-// 	G3: new Tone.Buffer("./audio/1.g3.ogg"),
-// 	A3: new Tone.Buffer("./audio/3.a3.ogg"),
-// 	C4: new Tone.Buffer('./audio/6.c4.ogg'),
-// 	Ds4: new Tone.Buffer('./audio/9.ds4.ogg'),
-// 	Fs4: new Tone.Buffer('./audio/12.fs4.ogg'),
-// 	A4: new Tone.Buffer('./audio/15.a4.ogg'),
-// 	C5: new Tone.Buffer('./audio/18.c5.ogg'),
-// 	Ds5: new Tone.Buffer('./audio/21.ds5.ogg'),
-// 	Fs5: new Tone.Buffer('./audio/24.fs5.ogg'),
-// 	A5: new Tone.Buffer('./audio/27.a5.ogg'),
-// 	C6: new Tone.Buffer('./audio/29.c6.ogg'),
-// 	Ds6: new Tone.Buffer('./audio/30.ds6.ogg'),
-// 	Fs6: new Tone.Buffer('./audio/31.fs6.ogg'),
-// 	A6: new Tone.Buffer('./audio/32.a6.ogg'),
-// };
-// Preload all samples with Tone.Buffers
+import { ToneAudioBuffers, Sampler } from "tone";
 let buffersLoaded = false;
 let samplerLoaded = false;
 let isLoaded = false;
-const buffers = new Tone.Buffers({
+const buffers = new ToneAudioBuffers({
 	"G3": "./audio/1.g3.ogg",
 	"A3": "./audio/3.a3.ogg",
 	"C4": "./audio/6.c4.ogg",
@@ -36,12 +20,12 @@ const buffers = new Tone.Buffers({
 }, function () {
 	buffersLoaded = true;
 	isLoaded = samplerLoaded && buffersLoaded;
-	console.log({ isLoaded })
 });
 
 
 export function createSampler() {
-	return new Tone.Sampler({
+	console.log('creating sampler')
+	return new Sampler({
 		urls: {
 			G1: buffers.get("G3"),
 			A1: buffers.get("A3"),
@@ -68,5 +52,6 @@ export function createSampler() {
 }
 
 export function isSamplerLoaded() {
+	console.log({buffersLoaded, samplerLoaded, isLoaded})
 	return isLoaded;
 }

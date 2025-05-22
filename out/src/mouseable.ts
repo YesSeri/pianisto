@@ -1,7 +1,9 @@
+// @ts-nocheck
 export default function mouseable(node, cbStart, cbEnd) {
 	let lastEl = null;
 
 	function handleMouseDown(event) {
+		console.log('mouse down')
 		if (event.button !== 0) return;
 		const el = event.target;
 		if (!el || el.tagName !== 'path') return
