@@ -1,6 +1,6 @@
-import { createSampler, isSamplerLoaded } from './sampler';
-import touchable from './touchable.js';
-import mouseable from './mouseable';
+import { createSampler, isSamplerLoaded } from './sampler.ts';
+import touchable from './touchable.ts';
+import mouseable from './mouseable.ts';
 import { Sampler } from 'tone';
 
 export default function piano(state: any) {
@@ -9,6 +9,7 @@ export default function piano(state: any) {
 	const whiteGroup = document.getElementById("white-keys");
 	const blackGroup = document.getElementById("black-keys");
 	const pianoSvg = document.getElementById("piano");
+	if (!(pianoSvg instanceof SVGElement)) return
 
 	let sampler: Sampler;
 
@@ -76,12 +77,12 @@ export default function piano(state: any) {
 	state.subscribe(draw);
 
 	function idToNote(id: string) {
-		const last =parseInt(id.slice(-1));
+		const last = parseInt(id.slice(-1));
 		const base = id.slice(0, -1);
 		return base + (last - 2);
 	}
 
-	function playSound(el: { id: any; }) {
+	function playSound(el: Element) {
 		if (!sampler) {
 			sampler = createSampler();
 		};
@@ -89,7 +90,7 @@ export default function piano(state: any) {
 		if (!isSamplerLoaded()) {
 			return;
 		}
-		const note = idToNote(el?.id);
+		const note = idToNote(el.id);
 		try {
 			sampler.triggerAttack(note);
 		} catch (err) {
@@ -97,7 +98,7 @@ export default function piano(state: any) {
 		}
 	}
 
-	function stopSound(el: { id: any; }) {
+	function stopSound(el: Element) {
 		console.log(el)
 		if (!sampler) return;
 		const note = idToNote(el?.id);

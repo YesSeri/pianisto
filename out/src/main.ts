@@ -1,6 +1,6 @@
-import state from "./shared";
-import settings from "./settings";
-import piano from "./piano";
+import state from "./shared.ts";
+import settings from "./settings.ts";
+import piano from "./piano.ts";
 console.log('main js')
 piano(state);
 console.log('pianofied js')

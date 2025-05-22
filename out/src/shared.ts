@@ -1,4 +1,5 @@
 type Note = string;
+export type ElementSideEffectFn = (el: Element) => void;
 type Subscriber = (notes: Note[]) => void;
 function createState() {
 	let allNotes = [

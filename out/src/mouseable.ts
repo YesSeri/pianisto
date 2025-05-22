@@ -1,5 +1,7 @@
 // @ts-nocheck
-export default function mouseable(node, cbStart, cbEnd) {
+import { ElementSideEffectFn } from "./shared.ts";
+
+export default function mouseable(node: SVGElement, cbStart: ElementSideEffectFn, cbEnd: ElementSideEffectFn) {
 	let lastEl = null;
 
 	function handleMouseDown(event) {
