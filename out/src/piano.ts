@@ -1,17 +1,20 @@
-import { createSampler, isSamplerLoaded } from './sampler.ts';
-import touchable from './touchable.ts';
-import mouseable from './mouseable.ts';
-import { Sampler } from 'tone';
+import { touchable } from './touchable.ts';
+import { mouseable } from './mouseable.ts';
+import { createSampler } from './sampler.ts';
+import { NotesState } from './shared.ts';
 
-export default function piano(state: any) {
-
-	const keyWidth = 100;
+export default async function setupPiano(notesState: NotesState) {
 	const whiteGroup = document.getElementById("white-keys");
 	const blackGroup = document.getElementById("black-keys");
 	const pianoSvg = document.getElementById("piano");
+	const spinner = document.getElementById("spinner");
 	if (!(pianoSvg instanceof SVGElement)) return
+	const keyWidth = 100;
 
-	let sampler: Sampler;
+	const sampler = await createSampler();
+	pianoSvg?.classList.remove('loading')
+	spinner?.remove();
+
 
 	function hasSharp(note: string[]) {
 		return ['C', 'D', 'F', 'G', 'A'].includes(note[0]);
@@ -73,8 +76,8 @@ export default function piano(state: any) {
 		drawBlackKeys(notes);
 	}
 
-	draw(state.notes);
-	state.subscribe(draw);
+	draw(notesState.notes);
+	notesState.subscribe(draw);
 
 	function idToNote(id: string) {
 		const last = parseInt(id.slice(-1));
@@ -83,24 +86,11 @@ export default function piano(state: any) {
 	}
 
 	function playSound(el: Element) {
-		if (!sampler) {
-			sampler = createSampler();
-		};
-		console.log('playing')
-		if (!isSamplerLoaded()) {
-			return;
-		}
 		const note = idToNote(el.id);
-		try {
-			sampler.triggerAttack(note);
-		} catch (err) {
-			console.error("Sampler not ready:", err);
-		}
+		sampler.triggerAttack(note);
 	}
 
 	function stopSound(el: Element) {
-		console.log(el)
-		if (!sampler) return;
 		const note = idToNote(el?.id);
 		sampler.triggerRelease(note);
 	}

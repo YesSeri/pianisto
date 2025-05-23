@@ -1,9 +1,9 @@
 import { ElementSideEffectFn } from "./shared.ts";
 
-export default function touchable(node: SVGElement, cbStart: ElementSideEffectFn, cbEnd: ElementSideEffectFn) {
+export const touchable = (node: SVGElement, cbStart: ElementSideEffectFn, cbEnd: ElementSideEffectFn) => {
 	let activeTouches = new Set<Element>();
 
-	function handleTouchDown(event: TouchEvent) {
+	function handleDown(event: TouchEvent) {
 		event.preventDefault();
 		for (const touch of event.targetTouches) {
 			const el = touch.target;
@@ -12,12 +12,12 @@ export default function touchable(node: SVGElement, cbStart: ElementSideEffectFn
 				cbStart(el);
 			}
 		}
-		window.addEventListener('touchmove', handleTouchMove);
-		window.addEventListener('touchend', handleTouchRelease);
-		window.addEventListener('touchcancel', handleTouchRelease);
+		window.addEventListener('touchmove', handleMove);
+		window.addEventListener('touchend', handleUp);
+		window.addEventListener('touchcancel', handleUp);
 	}
 
-	function handleTouchMove(event: TouchEvent) {
+	function handleMove(event: TouchEvent) {
 		const current = new Set(
 			[...event.touches]
 				.map(t => document.elementFromPoint(t.clientX, t.clientY))
@@ -38,7 +38,7 @@ export default function touchable(node: SVGElement, cbStart: ElementSideEffectFn
 		activeTouches = new Set([...current].filter((el): el is Element => !!el));
 	}
 
-	function handleTouchRelease(event: TouchEvent) {
+	function handleUp(event: TouchEvent) {
 		for (const touch of event.changedTouches) {
 			const el = document.elementFromPoint(touch.clientX, touch.clientY);
 			if (el && activeTouches.has(el)) {
@@ -47,22 +47,12 @@ export default function touchable(node: SVGElement, cbStart: ElementSideEffectFn
 			}
 		}
 		if (event.touches.length === 0) {
-			window.removeEventListener('touchmove', handleTouchMove);
-			window.removeEventListener('touchend', handleTouchRelease);
-			window.removeEventListener('touchcancel', handleTouchRelease);
+			window.removeEventListener('touchmove', handleMove);
+			window.removeEventListener('touchend', handleUp);
+			window.removeEventListener('touchcancel', handleUp);
 			activeTouches.clear();
 		}
 	}
 
-	node.addEventListener('touchstart', handleTouchDown, { passive: false });
-
-	return {
-		destroy() {
-			node.removeEventListener('touchstart', handleTouchDown);
-			window.removeEventListener('touchmove', handleTouchMove);
-			window.removeEventListener('touchend', handleTouchRelease);
-			window.removeEventListener('touchcancel', handleTouchRelease);
-			activeTouches.clear();
-		}
-	};
+	node.addEventListener('touchstart', handleDown, { passive: false });
 }

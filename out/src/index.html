@@ -5,6 +5,11 @@
 	<meta charset="UTF-8">
 	<title>Vanilla Piano</title>
 	<style>
+		.loading {
+			pointer-events: none;
+			opacity: 0.5;
+		}
+
 		#container {
 			width: 100%;
 			max-width: 800px;
@@ -30,6 +35,33 @@
 		.hide {
 			display: none;
 		}
+
+		#spinner {
+			width: 48px;
+			height: 48px;
+			border: 5px solid #000;
+			border-bottom-color: #FF3D00;
+			border-radius: 50%;
+			display: inline-block;
+			box-sizing: border-box;
+			animation: rotation 1s linear infinite;
+		}
+
+		@keyframes rotation {
+			0% {
+				transform: rotate(0deg);
+			}
+
+			100% {
+				transform: rotate(360deg);
+			}
+		}
+
+		.loading-overlay {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+		}
 	</style>
 </head>
 
@@ -43,7 +75,10 @@
 		Click once to load piano.
 	</p>
 	<main id="container">
-		<svg id="piano" viewBox="-1 -1 701 302" preserveAspectRatio="none">
+		<div class="loading-overlay">
+			<span id="spinner"></span>
+		</div>
+		<svg class="loading" id="piano" viewBox="-1 -1 701 302" preserveAspectRatio="none">
 			<g id="white-keys"></g>
 			<g id="black-keys"></g>
 		</svg>
