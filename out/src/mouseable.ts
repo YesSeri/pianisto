@@ -1,21 +1,19 @@
-// @ts-nocheck
-import { ElementSideEffectFn } from "./shared.ts";
+import { ElementSideEffectFn} from "./shared.ts";
 
-export default function mouseable(node: SVGElement, cbStart: ElementSideEffectFn, cbEnd: ElementSideEffectFn) {
-	let lastEl = null;
+export const mouseable = (node: SVGElement, cbStart: ElementSideEffectFn, cbEnd: ElementSideEffectFn) => {
+	let lastEl: Element | null = null;
 
-	function handleMouseDown(event) {
-		console.log('mouse down')
+	function handleDown(event: MouseEvent) {
 		if (event.button !== 0) return;
 		const el = event.target;
-		if (!el || el.tagName !== 'path') return
+		if (!(el instanceof Element) || el.tagName !== 'path') return
 		lastEl = el;
 		cbStart(lastEl);
-		window.addEventListener('mousemove', handleMouseMove);
-		window.addEventListener('mouseup', handleMouseUp);
+		window.addEventListener('mousemove', handleMove);
+		window.addEventListener('mouseup', handleUp);
 	}
 
-	function handleMouseMove(event) {
+	function handleMove(event: MouseEvent) {
 		const el = document.elementFromPoint(event.clientX, event.clientY);
 
 		if (el && el.tagName === 'path') {
@@ -32,19 +30,11 @@ export default function mouseable(node: SVGElement, cbStart: ElementSideEffectFn
 		}
 	}
 
-	function handleMouseUp(event) {
-		// const el = document.elementFromPoint(event.clientX, event.clientY);
-		// if (!el || el.tagName !== "path") return
+	function handleUp(_event: MouseEvent) {
+		if (!lastEl) return;
 		cbEnd(lastEl);
-		window.removeEventListener('mousemove', handleMouseMove);
-		window.removeEventListener('mouseup', handleMouseUp);
+		window.removeEventListener('mousemove', handleMove);
+		window.removeEventListener('mouseup', handleUp);
 	}
-	node.addEventListener('mousedown', handleMouseDown);
-	return {
-		destroy() {
-			node.removeEventListener('mousedown', handleMouseDown);
-			window.removeEventListener('mousemove', handleMouseMove);
-			window.removeEventListener('mouseup', handleMouseUp);
-		}
-	};
+	node.addEventListener('mousedown', handleDown);
 }
