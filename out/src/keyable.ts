@@ -6,7 +6,18 @@ export const keyable = (
   cbEnd: ElementSideEffectFn
 ) => {
   const pressed = new Set<KeyCode>();
+
   function handleDown(evt: KeyboardEvent) {
+    const active = document.activeElement;
+    if (
+      active &&
+      (active.tagName === "INPUT" ||
+        active.tagName === "SELECT" ||
+        active.tagName === "TEXTAREA")
+    ) {
+      (active as HTMLElement).blur();
+    }
+
     const isRefreshPressed = evt.code === "KeyR" && evt.ctrlKey;
     const isDevToolsPressed =
       evt.code === "KeyC" && evt.ctrlKey && evt.shiftKey;
@@ -31,8 +42,8 @@ export const keyable = (
     if (!el) return;
     cbEnd(el);
   }
-  window.addEventListener("keydown", handleDown);
-  window.addEventListener("keyup", handleUp);
+  window.addEventListener("keydown", handleDown, { capture: true });
+  window.addEventListener("keyup", handleUp, { capture: true });
 };
 
 function isKeyCode(code: string): code is KeyCode {

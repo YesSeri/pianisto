@@ -1,12 +1,7 @@
 import { touchable } from "./touchable.ts";
 import { mouseable } from "./mouseable.ts";
 import { createSampler } from "./sampler.ts";
-import {
-  NotesState,
-  translations,
-  noteToKey,
-  CheckboxState,
-} from "./shared.ts";
+import { NotesState, noteToKey, CheckboxState } from "./shared.ts";
 import { keyable } from "./keyable.ts";
 
 export default async function setupPiano(
@@ -38,20 +33,29 @@ export default async function setupPiano(
     }
   }
 
-  function drawWhiteText(x: number, key: string) {
+  function createText(x: number, y: number, content: string) {
     const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
-    text.setAttribute("x", x + 36 + "");
-    text.setAttribute("y", 250 + "");
-    text.innerHTML = key;
-    text.classList.add("white-keyboard-char");
-    whiteGroup?.appendChild(text);
+    text.setAttribute("x", x + "");
+    text.setAttribute("y", y + "");
+    text.innerHTML = content;
+    return text;
   }
-  function drawBlackText(x: number, key: string) {
-    const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
-    text.setAttribute("x", x + 20 + "");
-    text.setAttribute("y", 150 + "");
-    text.innerHTML = key;
-    blackGroup?.appendChild(text);
+
+  function drawShowKeysText(
+    x: number,
+    y: number,
+    key: string,
+    group: Element | null
+  ) {
+    if (!group) return;
+    group.appendChild(createText(x, y, key));
+  }
+
+  function drawWhiteText(x: number, y: number, content: string) {
+    drawShowKeysText(x, y, content, whiteGroup);
+  }
+  function drawBlackText(x: number, y: number, content: string) {
+    drawShowKeysText(x, y, content, blackGroup);
   }
   function drawWhiteKeys(notes: any[], showNotes: boolean, showKeys: boolean) {
     clearChildren(whiteGroup);
@@ -75,8 +79,14 @@ export default async function setupPiano(
       path.classList.add("white-key");
       whiteGroup?.appendChild(path);
       const key = noteToKey[note];
-      if (showKeys) {
-        drawWhiteText(x, key);
+      const offset = 36;
+      if (showKeys !== showNotes) {
+        (showKeys
+          ? (y: number) => drawWhiteText(x + offset, y, key)
+          : (y: number) => drawWhiteText(x + offset / 2, y, note))(250);
+      } else if (showKeys) {
+        drawWhiteText(x + offset, 280, key);
+        drawWhiteText(x + offset, 230, note.slice(0, -1));
       }
     });
   }
@@ -100,8 +110,17 @@ export default async function setupPiano(
       path.classList.add("black-key");
       blackGroup?.appendChild(path);
       const key = noteToKey[sharp];
-      if (showKeys) {
-        drawBlackText(x, key);
+
+      const offset = 12;
+      if (showKeys !== showNotes) {
+        (showKeys
+          ? (y: number) => drawBlackText(x + offset + 8, y, key)
+          : (y: number) => drawBlackText(x + Math.round(offset / 2), y, note))(
+          150
+        );
+      } else if (showKeys) {
+        drawBlackText(x + offset + 8, 120, key);
+        drawBlackText(x + offset / 2, 170, sharp.slice(0, -1));
       }
     });
   }

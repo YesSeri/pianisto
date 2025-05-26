@@ -24,6 +24,9 @@ export default function settings(
   const highestSelect = document.getElementById(
     "highestNote"
   ) as HTMLSelectElement;
+  const showFullscreenButton = document.getElementById(
+    "showFullscreen"
+  ) as HTMLSelectElement;
 
   function populateSelect(select: HTMLSelectElement, options: string[]) {
     select.innerHTML = "";
@@ -82,6 +85,10 @@ export default function settings(
   });
   showKeybindingsCheckbox.addEventListener("change", function () {
     checkboxState.showKeybindings = this.checked;
+  });
+  showFullscreenButton.addEventListener("click", () => {
+    let canvas = document.getElementById("piano");
+    canvas?.requestFullscreen();
   });
 
   refreshOptions();

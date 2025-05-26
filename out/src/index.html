@@ -68,13 +68,16 @@
       </svg>
     </main>
     <div class="fitted-container">
-      <tr>
-        <td>
-          <button id="toggle-settings">Toggle Settings</button>
-        </td>
-      </tr>
       <table id="settings-container">
         <tbody>
+          <tr>
+            <td>
+              <button id="toggle-settings">Toggle Settings</button>
+            </td>
+            <td class="setting">
+              <button id="showFullscreen">Fullscreen</button>
+            </td>
+          </tr>
           <tr class="setting">
             <td><label for="lowestNote">Select lowest note:</label></td>
             <td><select id="lowestNote"></select></td>
@@ -84,13 +87,13 @@
             <td><select id="highestNote"></select></td>
           </tr>
           <tr class="setting">
-            <td for="showNotes">
+            <td>
               <label for="showNotes">Show Note Values:</label>
             </td>
             <td><input type="checkbox" id="showNotes" /></td>
           </tr>
           <tr class="setting">
-            <td for="showKeybindings">
+            <td>
               <label for="showKeybindings">Show Keybindings:</label>
             </td>
             <td><input type="checkbox" id="showKeybindings" /></td>

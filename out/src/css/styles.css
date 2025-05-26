@@ -39,7 +39,7 @@ svg {
   stroke: black;
 }
 
-.hide {
+.hide .setting {
   display: none;
 }
 
@@ -88,6 +88,12 @@ text {
   fill: black;
 }
 
-.black-key + text {
+.white-key + text + text,
+.white-key + text {
+  fill: black;
+}
+
+.black-key + text,
+.black-key + text + text {
   fill: white;
 }
