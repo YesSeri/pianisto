@@ -3,34 +3,8 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>Vanilla Piano</title>
-	<style>
-		#container {
-			width: 100%;
-			max-width: 800px;
-			margin: auto;
-			position: relative;
-		}
-
-		svg {
-			width: 100%;
-			height: 300px;
-		}
-
-		.white-key {
-			fill: white;
-			stroke: black;
-		}
-
-		.black-key {
-			fill: black;
-			stroke: black;
-		}
-
-		.hide {
-			display: none;
-		}
-	</style>
+	<title>Pianisto</title>
+	<link rel="stylesheet" href="css/styles.css">
 </head>
 
 <body>
@@ -43,9 +17,26 @@
 		Click once to load piano.
 	</p>
 	<main id="container">
-		<svg id="piano" viewBox="-1 -1 701 302" preserveAspectRatio="none">
-			<g id="white-keys"></g>
-			<g id="black-keys"></g>
+		<div class="loading-overlay">
+			<span id="spinner"></span>
+		</div>
+		<svg class="loading" id="piano" viewBox="-1 -1 701 302" preserveAspectRatio="none">
+			<g id="white-keys">
+				<path d="M0 0 v290 a10 10 0 0 0 10 10 h90 v-300 Z" id="C4" class="white-key"></path>
+				<path d="M100 0 v300 h100 v-300 Z" id="D4" class="white-key"></path>
+				<path d="M200 0 v300 h100 v-300 Z" id="E4" class="white-key"></path>
+				<path d="M300 0 v300 h100 v-300 Z" id="F4" class="white-key"></path>
+				<path d="M400 0 v300 h100 v-300 Z" id="G4" class="white-key"></path>
+				<path d="M500 0 v300 h100 v-300 Z" id="A4" class="white-key"></path>
+				<path d="M600 0 v300 h90 a10 10 0 0 0 10 -10 v-290 Z" id="B4" class="white-key"></path>
+			</g>
+			<g id="black-keys">
+				<path d="M65 0 v170 a10 10 0 0 0 10 10 h50 a10 10 0 0 0 10 -10 V0 Z" id="C#4" class="black-key"></path>
+				<path d="M165 0 v170 a10 10 0 0 0 10 10 h50 a10 10 0 0 0 10 -10 V0 Z" id="D#4" class="black-key"></path>
+				<path d="M365 0 v170 a10 10 0 0 0 10 10 h50 a10 10 0 0 0 10 -10 V0 Z" id="F#4" class="black-key"></path>
+				<path d="M465 0 v170 a10 10 0 0 0 10 10 h50 a10 10 0 0 0 10 -10 V0 Z" id="G#4" class="black-key"></path>
+				<path d="M565 0 v170 a10 10 0 0 0 10 10 h50 a10 10 0 0 0 10 -10 V0 Z" id="A#4" class="black-key"></path>
+			</g>
 		</svg>
 	</main>
 
