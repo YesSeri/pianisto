@@ -84,16 +84,11 @@ text {
   font-family: "Courier New", Courier, monospace;
   pointer-events: none;
 }
-.white-key + text {
+
+.white-key ~ text {
   fill: black;
 }
 
-.white-key + text + text,
-.white-key + text {
-  fill: black;
-}
-
-.black-key + text,
-.black-key + text + text {
+.black-key ~ text {
   fill: white;
 }

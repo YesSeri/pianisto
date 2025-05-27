@@ -1,5 +1,2 @@
-/out/node_modules/
-/node_modules/
-/public/build/
-
-.DS_Store
+/node_modules
+/old
