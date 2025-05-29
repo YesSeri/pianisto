@@ -15,9 +15,6 @@ export default function settings(
   const container = document.getElementById(
     "settings-container"
   ) as HTMLElement;
-  const toggleBtn = document.getElementById(
-    "toggle-settings"
-  ) as HTMLButtonElement;
   const lowestSelect = document.getElementById(
     "lowestNote"
   ) as HTMLSelectElement;
@@ -77,9 +74,6 @@ export default function settings(
     updateDisplayedNotes();
   });
 
-  toggleBtn.addEventListener("click", () => {
-    container.classList.toggle("hide");
-  });
   showNotesCheckbox.addEventListener("change", function () {
     checkboxState.showNoteValue = this.checked;
   });

@@ -1,4 +1,8 @@
+body {
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+}
 .fitted-container {
+  padding: 4px;
   max-width: 600px;
   margin: auto;
 }
@@ -19,24 +23,9 @@
   position: relative;
 }
 
-svg {
+#piano {
   width: 100%;
   height: 400px;
-}
-
-.white-key,
-.black-key {
-  transition: fill 0.2s;
-}
-
-.white-key {
-  fill: white;
-  stroke: black;
-}
-
-.black-key {
-  fill: black;
-  stroke: black;
 }
 
 .hide .setting {
@@ -71,12 +60,38 @@ svg {
   z-index: 1000;
 }
 
-.white-key.highlight {
-  fill: #ccc;
+.white-key,
+.black-key {
+  transition: fill 0.2s;
 }
 
-.black-key.highlight {
-  fill: #444;
+.white-key {
+  fill: #fff;
+  stroke: #000;
+  &:hover {
+    fill: #e0e0e0;
+  }
+  &.highlight {
+    fill: #ccc !important;
+  }
+  & ~ text {
+    fill: #000;
+  }
+}
+
+.black-key {
+  fill: #000;
+  stroke: #000;
+  &:hover {
+    fill: #333;
+  }
+  &.highlight {
+    fill: #555 !important;
+  }
+
+  & ~ text {
+    fill: #fff;
+  }
 }
 
 text {
@@ -85,10 +100,30 @@ text {
   pointer-events: none;
 }
 
-.white-key ~ text {
-  fill: black;
+.pane-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
 
-.black-key ~ text {
-  fill: white;
+.settings {
+  display: grid;
+  row-gap: 8px;
+  column-gap: 4px;
+  grid-template-columns: 1fr 1fr;
+  input[type="checkbox"] {
+    margin-left: 8px;
+    + label {
+      margin-left: 4px;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .settings,
+  .pane-container {
+    grid-template-columns: 1fr;
+  }
+  .pane-container > * {
+    margin: auto;
+  }
 }
