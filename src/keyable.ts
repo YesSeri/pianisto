@@ -1,7 +1,7 @@
-import { ElementSideEffectFn, KeyCode, translations } from "./shared.ts";
+import { ElementSideEffectFn, KeyCode, translations } from './shared.ts';
 
 export const keyable = (
-  _node: any,
+  _node: SVGElement,
   cbStart: ElementSideEffectFn,
   cbEnd: ElementSideEffectFn
 ) => {
@@ -11,16 +11,13 @@ export const keyable = (
     const active = document.activeElement;
     if (
       active &&
-      (active.tagName === "INPUT" ||
-        active.tagName === "SELECT" ||
-        active.tagName === "TEXTAREA")
+      (active.tagName === 'INPUT' || active.tagName === 'SELECT' || active.tagName === 'TEXTAREA')
     ) {
       (active as HTMLElement).blur();
     }
 
-    const isRefreshPressed = evt.code === "KeyR" && evt.ctrlKey;
-    const isDevToolsPressed =
-      evt.code === "KeyC" && evt.ctrlKey && evt.shiftKey;
+    const isRefreshPressed = evt.code === 'KeyR' && evt.ctrlKey;
+    const isDevToolsPressed = evt.code === 'KeyC' && evt.ctrlKey && evt.shiftKey;
     if (isRefreshPressed || isDevToolsPressed) {
       return;
     }
@@ -42,8 +39,8 @@ export const keyable = (
     if (!el) return;
     cbEnd(el);
   }
-  window.addEventListener("keydown", handleDown, { capture: true });
-  window.addEventListener("keyup", handleUp, { capture: true });
+  window.addEventListener('keydown', handleDown, { capture: true });
+  window.addEventListener('keyup', handleUp, { capture: true });
 };
 
 function isKeyCode(code: string): code is KeyCode {

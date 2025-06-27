@@ -12,7 +12,7 @@ interface CheckboxState {
 function createCheckboxState(): CheckboxState {
   let showNoteValue = false;
   let showKeybindings = false;
-  let subscribers: ((showNotes: boolean, showKeys: boolean) => void)[] = [];
+  const subscribers: ((showNotes: boolean, showKeys: boolean) => void)[] = [];
 
   return {
     get showNoteValue() {
@@ -50,46 +50,62 @@ export interface NotesState {
   subscribe(fn: Subscriber): () => void;
 }
 
+function debounce(cb, timeout){
+	let timer = null;
+	return (args) => {
+		if(timer) {
+			clearTimeout(timer);
+		}
+		timer = setTimeout(() => cb(args), timeout)
+	};
+
+}
 function createState(): NotesState {
-  let allNotes = [
-    "G3",
-    "A3",
-    "B3",
-    "C4",
-    "D4",
-    "E4",
-    "F4",
-    "G4",
-    "A4",
-    "B4",
-    "C5",
-    "D5",
-    "E5",
-    "F5",
-    "G5",
-    "A5",
-    "B5",
-    "C6",
-    "D6",
-    "E6",
-    "F6",
-    "G6",
+  const allNotes = [
+    'G3',
+    'A3',
+    'B3',
+    'C4',
+    'D4',
+    'E4',
+    'F4',
+    'G4',
+    'A4',
+    'B4',
+    'C5',
+    'D5',
+    'E5',
+    'F5',
+    'G5',
+    'A5',
+    'B5',
+    'C6',
+    'D6',
+    'E6',
+    'F6',
+    'G6',
   ];
   let notes = [...allNotes].slice(3, 3 + 10);
   let subscribers: Subscriber[] = [];
+  const debouncedResize = debounce(() => {
+	  subscribers.forEach((fn) => fn([...notes]))
+  }, 200);
+  addEventListener("resize", (event) => {
+	  debouncedResize();
+  })
 
   return {
     getMaxKeys() {
       return allNotes.length;
     },
     set lowestNote(val: string) {
-      let lowIdx = allNotes.indexOf(val);
-      let highIdx = allNotes.indexOf(this.notes[this.notes.length - 1]);
+      const lowIdx = allNotes.indexOf(val);
+      const highIdx = allNotes.indexOf(this.notes[this.notes.length - 1]);
       this.notes = [...allNotes].slice(lowIdx, highIdx + 1);
     },
     set highestNote(val: string) {
-      let lowIdx = allNotes.indexOf(this.notes[0]);
-      let highIdx = allNotes.indexOf(val);
+      const lowIdx = allNotes.indexOf(this.notes[0]);
+      const highIdx = allNotes.indexOf(val);
       this.notes = [...allNotes].slice(lowIdx, highIdx + 1);
     },
     get notes() {
@@ -103,11 +119,11 @@ function createState(): NotesState {
       return [...allNotes];
     },
     init() {
-      let lowestNote = notes[0];
-      let highestNote = notes[notes.length - 1];
+      const lowestNote = notes[0];
+      const highestNote = notes[notes.length - 1];
 
-      let lowIdx = allNotes.indexOf(lowestNote);
-      let highIdx = allNotes.indexOf(highestNote);
+      const lowIdx = allNotes.indexOf(lowestNote);
+      const highIdx = allNotes.indexOf(highestNote);
       this.notes = [...allNotes].slice(lowIdx, highIdx + 1);
     },
 
@@ -125,82 +141,82 @@ type KeyTranslation = {
 };
 
 type KeyCode =
-  | "KeyZ"
-  | "KeyS"
-  | "KeyX"
-  | "KeyD"
-  | "KeyC"
-  | "KeyV"
-  | "KeyG"
-  | "KeyB"
-  | "KeyH"
-  | "KeyN"
-  | "KeyM"
-  | "KeyK"
-  | "Comma"
-  | "KeyL"
-  | "Period"
-  | "Semicolon"
-  | "Slash"
-  | "KeyQ"
-  | "Digit2"
-  | "KeyW"
-  | "Digit3"
-  | "KeyE"
-  | "KeyR"
-  | "Digit5"
-  | "KeyT"
-  | "Digit6"
-  | "KeyY"
-  | "Digit7"
-  | "KeyU"
-  | "KeyI"
-  | "Digit9"
-  | "KeyO"
-  | "Digit0"
-  | "KeyP"
-  | "BracketLeft"
-  | "Equal"
-  | "BracketRight";
+  | 'KeyZ'
+  | 'KeyS'
+  | 'KeyX'
+  | 'KeyD'
+  | 'KeyC'
+  | 'KeyV'
+  | 'KeyG'
+  | 'KeyB'
+  | 'KeyH'
+  | 'KeyN'
+  | 'KeyM'
+  | 'KeyK'
+  | 'Comma'
+  | 'KeyL'
+  | 'Period'
+  | 'Semicolon'
+  | 'Slash'
+  | 'KeyQ'
+  | 'Digit2'
+  | 'KeyW'
+  | 'Digit3'
+  | 'KeyE'
+  | 'KeyR'
+  | 'Digit5'
+  | 'KeyT'
+  | 'Digit6'
+  | 'KeyY'
+  | 'Digit7'
+  | 'KeyU'
+  | 'KeyI'
+  | 'Digit9'
+  | 'KeyO'
+  | 'Digit0'
+  | 'KeyP'
+  | 'BracketLeft'
+  | 'Equal'
+  | 'BracketRight';
 
 const translations: Record<KeyCode, KeyTranslation> = {
-  KeyZ: { note: "G3", key: "z" },
-  KeyS: { note: "G#3", key: "s" },
-  KeyX: { note: "A3", key: "x" },
-  KeyD: { note: "A#3", key: "d" },
-  KeyC: { note: "B3", key: "c" },
-  KeyV: { note: "C4", key: "v" },
-  KeyG: { note: "C#4", key: "g" },
-  KeyB: { note: "D4", key: "b" },
-  KeyH: { note: "D#4", key: "h" },
-  KeyN: { note: "E4", key: "n" },
-  KeyM: { note: "F4", key: "m" },
-  KeyK: { note: "F#4", key: "k" },
-  Comma: { note: "G4", key: "," },
-  KeyL: { note: "G#4", key: "l" },
-  Period: { note: "A4", key: "." },
-  Semicolon: { note: "A#4", key: ";" },
-  Slash: { note: "B4", key: "/" },
-  KeyQ: { note: "C5", key: "q" },
-  Digit2: { note: "C#5", key: "2" },
-  KeyW: { note: "D5", key: "w" },
-  Digit3: { note: "D#5", key: "3" },
-  KeyE: { note: "E5", key: "e" },
-  KeyR: { note: "F5", key: "r" },
-  Digit5: { note: "F#5", key: "5" },
-  KeyT: { note: "G5", key: "t" },
-  Digit6: { note: "G#5", key: "6" },
-  KeyY: { note: "A5", key: "y" },
-  Digit7: { note: "A#5", key: "7" },
-  KeyU: { note: "B5", key: "u" },
-  KeyI: { note: "C6", key: "i" },
-  Digit9: { note: "C#6", key: "9" },
-  KeyO: { note: "D6", key: "o" },
-  Digit0: { note: "D#6", key: "0" },
-  KeyP: { note: "E6", key: "p" },
-  BracketLeft: { note: "F6", key: "[" },
-  Equal: { note: "F#6", key: "=" },
-  BracketRight: { note: "G6", key: "]" },
+  KeyZ: { note: 'G3', key: 'z' },
+  KeyS: { note: 'G#3', key: 's' },
+  KeyX: { note: 'A3', key: 'x' },
+  KeyD: { note: 'A#3', key: 'd' },
+  KeyC: { note: 'B3', key: 'c' },
+  KeyV: { note: 'C4', key: 'v' },
+  KeyG: { note: 'C#4', key: 'g' },
+  KeyB: { note: 'D4', key: 'b' },
+  KeyH: { note: 'D#4', key: 'h' },
+  KeyN: { note: 'E4', key: 'n' },
+  KeyM: { note: 'F4', key: 'm' },
+  KeyK: { note: 'F#4', key: 'k' },
+  Comma: { note: 'G4', key: ',' },
+  KeyL: { note: 'G#4', key: 'l' },
+  Period: { note: 'A4', key: '.' },
+  Semicolon: { note: 'A#4', key: ';' },
+  Slash: { note: 'B4', key: '/' },
+  KeyQ: { note: 'C5', key: 'q' },
+  Digit2: { note: 'C#5', key: '2' },
+  KeyW: { note: 'D5', key: 'w' },
+  Digit3: { note: 'D#5', key: '3' },
+  KeyE: { note: 'E5', key: 'e' },
+  KeyR: { note: 'F5', key: 'r' },
+  Digit5: { note: 'F#5', key: '5' },
+  KeyT: { note: 'G5', key: 't' },
+  Digit6: { note: 'G#5', key: '6' },
+  KeyY: { note: 'A5', key: 'y' },
+  Digit7: { note: 'A#5', key: '7' },
+  KeyU: { note: 'B5', key: 'u' },
+  KeyI: { note: 'C6', key: 'i' },
+  Digit9: { note: 'C#6', key: '9' },
+  KeyO: { note: 'D6', key: 'o' },
+  Digit0: { note: 'D#6', key: '0' },
+  KeyP: { note: 'E6', key: 'p' },
+  BracketLeft: { note: 'F6', key: '[' },
+  Equal: { note: 'F#6', key: '=' },
+  BracketRight: { note: 'G6', key: ']' },
 } as const;
 
 const noteToKey: Record<string, string> = {};

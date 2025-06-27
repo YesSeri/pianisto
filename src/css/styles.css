@@ -1,6 +1,18 @@
+html,
 body {
-  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  --main-bg-color: rgb(196, 226, 255);
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
+body {
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 .fitted-container {
   padding: 4px;
   max-width: 600px;
@@ -17,15 +29,15 @@ body {
 }
 
 #container {
-  width: 100%;
-  max-width: 1000px;
   margin: auto;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 #piano {
-  width: 100%;
-  height: 400px;
+  max-width: 100%;
 }
 
 .hide .setting {
@@ -96,21 +108,29 @@ body {
 
 text {
   font-size: 48px;
-  font-family: "Courier New", Courier, monospace;
+  font-family: 'Courier New', Courier, monospace;
   pointer-events: none;
 }
 
 .pane-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  .pane {
+    padding: 8px;
+  }
 }
 
+header {
+  background-color: var(--main-bg-color);
+  border-bottom: solid 1px black;
+  margin-bottom: 16px;
+}
 .settings {
   display: grid;
   row-gap: 8px;
   column-gap: 4px;
   grid-template-columns: 1fr 1fr;
-  input[type="checkbox"] {
+  input[type='checkbox'] {
     margin-left: 8px;
     + label {
       margin-left: 4px;

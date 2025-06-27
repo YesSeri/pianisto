@@ -1,4 +1,4 @@
-import { ElementSideEffectFn } from "./shared.ts";
+import { ElementSideEffectFn } from './shared.ts';
 
 export const mouseable = (
   node: SVGElement,
@@ -10,16 +10,16 @@ export const mouseable = (
   function handleDown(event: MouseEvent) {
     if (event.button !== 0) return;
     const el = event.target;
-    if (!(el instanceof Element) || el.tagName !== "path") return;
+    if (!(el instanceof Element) || el.tagName !== 'path') return;
     lastEl = el;
     cbStart(lastEl);
-    window.addEventListener("mousemove", handleMove);
-    window.addEventListener("mouseup", handleUp);
+    window.addEventListener('mousemove', handleMove);
+    window.addEventListener('mouseup', handleUp);
   }
 
   function handleMove(event: MouseEvent) {
     const el = document.elementFromPoint(event.clientX, event.clientY);
-    if (el && el !== lastEl && el.tagName === "path") {
+    if (el && el !== lastEl && el.tagName === 'path') {
       cbStart(el);
       if (lastEl) {
         cbEnd(lastEl);
@@ -29,11 +29,11 @@ export const mouseable = (
     }
   }
 
-  function handleUp(_event: MouseEvent) {
+  function handleUp() {
     if (!lastEl) return;
     cbEnd(lastEl);
-    window.removeEventListener("mousemove", handleMove);
-    window.removeEventListener("mouseup", handleUp);
+    window.removeEventListener('mousemove', handleMove);
+    window.removeEventListener('mouseup', handleUp);
   }
-  node.addEventListener("mousedown", handleDown);
+  node.addEventListener('mousedown', handleDown);
 };

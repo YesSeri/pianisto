@@ -1,4 +1,4 @@
-import { ElementSideEffectFn } from "./shared.ts";
+import { ElementSideEffectFn } from './shared.ts';
 
 export const touchable = (
   node: SVGElement,
@@ -16,16 +16,16 @@ export const touchable = (
         cbStart(el);
       }
     }
-    window.addEventListener("touchmove", handleMove);
-    window.addEventListener("touchend", handleUp);
-    window.addEventListener("touchcancel", handleUp);
+    window.addEventListener('touchmove', handleMove);
+    window.addEventListener('touchend', handleUp);
+    window.addEventListener('touchcancel', handleUp);
   }
 
   function handleMove(event: TouchEvent) {
     const current = new Set(
       [...event.touches]
         .map((t) => document.elementFromPoint(t.clientX, t.clientY))
-        .filter((el) => el?.tagName === "path")
+        .filter((el) => el?.tagName === 'path')
     );
 
     const filtered = new Set<Element>();
@@ -51,12 +51,12 @@ export const touchable = (
       }
     }
     if (event.touches.length === 0) {
-      window.removeEventListener("touchmove", handleMove);
-      window.removeEventListener("touchend", handleUp);
-      window.removeEventListener("touchcancel", handleUp);
+      window.removeEventListener('touchmove', handleMove);
+      window.removeEventListener('touchend', handleUp);
+      window.removeEventListener('touchcancel', handleUp);
       activeTouches.clear();
     }
   }
 
-  node.addEventListener("touchstart", handleDown, { passive: false });
+  node.addEventListener('touchstart', handleDown, { passive: false });
 };
