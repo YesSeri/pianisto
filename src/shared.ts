@@ -50,15 +50,14 @@ export interface NotesState {
   subscribe(fn: Subscriber): () => void;
 }
 
-function debounce(cb, timeout){
-	let timer = null;
-	return (args) => {
-		if(timer) {
-			clearTimeout(timer);
-		}
-		timer = setTimeout(() => cb(args), timeout)
-	};
-
+function debounce(cb, timeout) {
+  let timer = null;
+  return (args) => {
+    if (timer) {
+      clearTimeout(timer);
+    }
+    timer = setTimeout(() => cb(args), timeout);
+  };
 }
 function createState(): NotesState {
   const allNotes = [
@@ -88,11 +87,11 @@ function createState(): NotesState {
   let notes = [...allNotes].slice(3, 3 + 10);
   let subscribers: Subscriber[] = [];
   const debouncedResize = debounce(() => {
-	  subscribers.forEach((fn) => fn([...notes]))
+    subscribers.forEach((fn) => fn([...notes]));
   }, 200);
-  addEventListener("resize", (event) => {
-	  debouncedResize();
-  })
+  addEventListener('resize', (event) => {
+    debouncedResize();
+  });
 
   return {
     getMaxKeys() {
