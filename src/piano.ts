@@ -4,7 +4,11 @@ import { createSampler } from './sampler.ts';
 import { NotesState, noteToKey, CheckboxState } from './shared.ts';
 import { keyable } from './keyable.ts';
 
-export default async function setupPiano(notesState: NotesState, checkboxState: CheckboxState) {
+export default async function setupPiano(
+  notesState: NotesState,
+  checkboxState: CheckboxState,
+  getSustainValue: () => number
+) {
   const MIN_RATIO = 2;
   const MAX_RATIO = 5;
 
@@ -146,8 +150,11 @@ export default async function setupPiano(notesState: NotesState, checkboxState: 
     highlightKey(el);
   };
   const releaseKey = (el: Element) => {
-    stopSound(el);
-    unhighlightKey(el);
+    const sustainValue = getSustainValue();
+    setTimeout(() => {
+      stopSound(el);
+      unhighlightKey(el);
+    }, sustainValue * 1000);
   };
 
   function adjustWidth(notes: string[]) {

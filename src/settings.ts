@@ -2,7 +2,6 @@ import { CheckboxState, NotesState } from './shared.ts';
 
 export default function settings(state: NotesState, checkboxState: CheckboxState) {
   const allNotes = state.allNotes;
-
   const showNotesCheckbox = document.getElementById('showNotes') as HTMLInputElement;
   const showKeybindingsCheckbox = document.getElementById('showKeybindings') as HTMLInputElement;
   const lowestSelect = document.getElementById('lowestNote') as HTMLSelectElement;
@@ -53,6 +52,10 @@ export default function settings(state: NotesState, checkboxState: CheckboxState
     updateDisplayedNotes();
   });
 
+  function getSustainValue() {
+    return parseInt(sustainSlider.value);
+  }
+
   sustainSlider.addEventListener('change', (evt) => {
     console.log({ evt });
     console.log(sustainSlider.value);
@@ -75,5 +78,9 @@ export default function settings(state: NotesState, checkboxState: CheckboxState
 
   refreshOptions();
   updateDisplayedNotes();
-  return [showNotesCheckbox.checked, showKeybindingsCheckbox.checked];
+  return {
+    showNotes: showNotesCheckbox.checked,
+    showKeybinding: showKeybindingsCheckbox.checked,
+    getSustainValue,
+  };
 }
