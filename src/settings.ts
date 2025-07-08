@@ -5,10 +5,10 @@ export default function settings(state: NotesState, checkboxState: CheckboxState
 
   const showNotesCheckbox = document.getElementById('showNotes') as HTMLInputElement;
   const showKeybindingsCheckbox = document.getElementById('showKeybindings') as HTMLInputElement;
-  const container = document.getElementById('settings-container') as HTMLElement;
   const lowestSelect = document.getElementById('lowestNote') as HTMLSelectElement;
   const highestSelect = document.getElementById('highestNote') as HTMLSelectElement;
   const showFullscreenButton = document.getElementById('showFullscreen') as HTMLSelectElement;
+  const sustainSlider = document.getElementById('setSustain') as HTMLSelectElement;
 
   function populateSelect(select: HTMLSelectElement, options: string[]) {
     select.innerHTML = '';
@@ -51,6 +51,15 @@ export default function settings(state: NotesState, checkboxState: CheckboxState
     state.highestNote = highestNote;
     refreshOptions();
     updateDisplayedNotes();
+  });
+
+  sustainSlider.addEventListener('change', (evt) => {
+    console.log({ evt });
+    console.log(sustainSlider.value);
+    // const highestNote = highestSelect.value;
+    // state.highestNote = highestNote;
+    // refreshOptions();
+    // updateDisplayedNotes();
   });
 
   showNotesCheckbox.addEventListener('change', function () {

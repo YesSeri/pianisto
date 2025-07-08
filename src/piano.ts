@@ -12,7 +12,7 @@ export default async function setupPiano(notesState: NotesState, checkboxState: 
   const blackGroup = document.getElementById('black-keys');
   const pianoSvg = document.getElementById('piano');
   const spinner = document.getElementById('spinner');
-  if (!(pianoSvg instanceof SVGElement)) return;
+  if (!(pianoSvg instanceof SVGElement) || !pianoSvg) return;
   const keyWidth = 100;
 
   const sampler = await createSampler();
@@ -152,10 +152,11 @@ export default async function setupPiano(notesState: NotesState, checkboxState: 
 
   function adjustWidth(notes: string[]) {
     const width = 100 * notes.length;
-    pianoSvg.setAttribute('width', width);
+    if (!pianoSvg) return;
+    pianoSvg.setAttribute('width', width.toString());
   }
 
-  function adjustSize(notes) {
+  function adjustSize(notes: string[]) {
     adjustWidth(notes);
   }
   notesState.subscribe((notes) =>

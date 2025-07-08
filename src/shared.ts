@@ -50,15 +50,16 @@ export interface NotesState {
   subscribe(fn: Subscriber): () => void;
 }
 
-function debounce(cb, timeout) {
-  let timer = null;
-  return (args) => {
+function debounce(cb: any, timeout: any) {
+  let timer: number;
+  return () => {
     if (timer) {
       clearTimeout(timer);
     }
-    timer = setTimeout(() => cb(args), timeout);
+    timer = setTimeout(() => cb(), timeout);
   };
 }
+// type Note = 'G3'| 'A3'| 'B3'| 'C4'| 'D4'| 'E4'| 'F4'| 'G4'| 'A4'| 'B4'| 'C5'| 'D5'| 'E5'| 'F5'| 'G5'| 'A5'| 'B5'| 'C6'| 'D6'| 'E6'| 'F6'| 'G6';
 function createState(): NotesState {
   const allNotes = [
     'G3',
@@ -89,7 +90,7 @@ function createState(): NotesState {
   const debouncedResize = debounce(() => {
     subscribers.forEach((fn) => fn([...notes]));
   }, 200);
-  addEventListener('resize', (event) => {
+  addEventListener('resize', () => {
     debouncedResize();
   });
 

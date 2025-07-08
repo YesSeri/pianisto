@@ -35,7 +35,7 @@ export const createSampler = async (): Promise<Sampler> => {
       onload: () => {
         resolve(sampler);
       },
-      release: 2,
+      release: 1,
     }).toDestination();
   });
 };
