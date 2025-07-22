@@ -1,4 +1,4 @@
-import { CheckboxState, NotesState } from './shared.ts';
+import { CheckboxState, isNote, NotesState } from './shared.ts';
 
 export default function settings(state: NotesState, checkboxState: CheckboxState) {
   const allNotes = state.allNotes;
@@ -40,6 +40,7 @@ export default function settings(state: NotesState, checkboxState: CheckboxState
 
   lowestSelect.addEventListener('change', () => {
     const lowestNote = lowestSelect.value;
+    if (!isNote(lowestNote)) return;
     state.lowestNote = lowestNote;
     refreshOptions();
     updateDisplayedNotes();
@@ -47,6 +48,7 @@ export default function settings(state: NotesState, checkboxState: CheckboxState
 
   highestSelect.addEventListener('change', () => {
     const highestNote = highestSelect.value;
+    if (!isNote(highestNote)) return;
     state.highestNote = highestNote;
     refreshOptions();
     updateDisplayedNotes();
@@ -56,14 +58,8 @@ export default function settings(state: NotesState, checkboxState: CheckboxState
     return parseInt(sustainSlider.value);
   }
 
-  sustainSlider.addEventListener('change', (evt) => {
-    console.log({ evt });
-    console.log(sustainSlider.value);
-    // const highestNote = highestSelect.value;
-    // state.highestNote = highestNote;
-    // refreshOptions();
-    // updateDisplayedNotes();
-  });
+  //   sustainSlider.addEventListener('change', (evt) => {
+  //   });
 
   showNotesCheckbox.addEventListener('change', function () {
     checkboxState.showNoteValue = this.checked;

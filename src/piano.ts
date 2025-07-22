@@ -9,9 +9,6 @@ export default async function setupPiano(
   checkboxState: CheckboxState,
   getSustainValue: () => number
 ) {
-  const MIN_RATIO = 2;
-  const MAX_RATIO = 5;
-
   const whiteGroup = document.getElementById('white-keys');
   const blackGroup = document.getElementById('black-keys');
   const pianoSvg = document.getElementById('piano');

@@ -1,5 +1,5 @@
 import { ToneAudioBuffers, Sampler } from 'tone';
-import { audioFiles } from './audio/index.js';
+import { audioFiles } from './audio/index.ts';
 
 const loadBuffers = async (): Promise<ToneAudioBuffers> => {
   return new Promise((resolve) => {

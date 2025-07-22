@@ -13,7 +13,6 @@ import ds6 from './30.ds6.ogg';
 import fs6 from './31.fs6.ogg';
 import a6 from './32.a6.ogg';
 
-// Option 1: Export as object with the note names as keys
 export const audioFiles = {
   G3: g3,
   A3: a3,

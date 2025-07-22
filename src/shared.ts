@@ -42,11 +42,11 @@ function createCheckboxState(): CheckboxState {
 
 export interface NotesState {
   init(): void;
-  notes: string[];
-  lowestNote: string;
-  highestNote: string;
+  notes: Note[];
+  lowestNote: Note;
+  highestNote: Note;
   getMaxKeys: () => number;
-  readonly allNotes: string[];
+  readonly allNotes: Note[];
   subscribe(fn: Subscriber): () => void;
 }
 
@@ -60,31 +60,60 @@ function debounce(cb: any, timeout: any) {
   };
 }
 // type Note = 'G3'| 'A3'| 'B3'| 'C4'| 'D4'| 'E4'| 'F4'| 'G4'| 'A4'| 'B4'| 'C5'| 'D5'| 'E5'| 'F5'| 'G5'| 'A5'| 'B5'| 'C6'| 'D6'| 'E6'| 'F6'| 'G6';
+
+type Note =
+  | 'G3'
+  | 'A3'
+  | 'B3'
+  | 'C4'
+  | 'D4'
+  | 'E4'
+  | 'F4'
+  | 'G4'
+  | 'A4'
+  | 'B4'
+  | 'C5'
+  | 'D5'
+  | 'E5'
+  | 'F5'
+  | 'G5'
+  | 'A5'
+  | 'B5'
+  | 'C6'
+  | 'D6'
+  | 'E6'
+  | 'F6'
+  | 'G6';
+
+const allNotesList: Note[] = [
+  'G3',
+  'A3',
+  'B3',
+  'C4',
+  'D4',
+  'E4',
+  'F4',
+  'G4',
+  'A4',
+  'B4',
+  'C5',
+  'D5',
+  'E5',
+  'F5',
+  'G5',
+  'A5',
+  'B5',
+  'C6',
+  'D6',
+  'E6',
+  'F6',
+  'G6',
+];
+export function isNote(value: string): value is Note {
+  return (allNotesList as readonly string[]).includes(value);
+}
 function createState(): NotesState {
-  const allNotes = [
-    'G3',
-    'A3',
-    'B3',
-    'C4',
-    'D4',
-    'E4',
-    'F4',
-    'G4',
-    'A4',
-    'B4',
-    'C5',
-    'D5',
-    'E5',
-    'F5',
-    'G5',
-    'A5',
-    'B5',
-    'C6',
-    'D6',
-    'E6',
-    'F6',
-    'G6',
-  ];
+  const allNotes: Note[] = allNotesList;
   let notes = [...allNotes].slice(3, 3 + 10);
   let subscribers: Subscriber[] = [];
   const debouncedResize = debounce(() => {
@@ -98,12 +127,12 @@ function createState(): NotesState {
     getMaxKeys() {
       return allNotes.length;
     },
-    set lowestNote(val: string) {
+    set lowestNote(val: Note) {
       const lowIdx = allNotes.indexOf(val);
       const highIdx = allNotes.indexOf(this.notes[this.notes.length - 1]);
       this.notes = [...allNotes].slice(lowIdx, highIdx + 1);
     },
-    set highestNote(val: string) {
+    set highestNote(val: Note) {
       const lowIdx = allNotes.indexOf(this.notes[0]);
       const highIdx = allNotes.indexOf(val);
       this.notes = [...allNotes].slice(lowIdx, highIdx + 1);
